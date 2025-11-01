@@ -140,6 +140,7 @@ kamaryar/
 - Daily activities (exercises, meditations, education)
 - Activity completion tracking
 - Content library with videos, audio, and text
+- More soon !
 
 ### Phase 4: Progress Tracking
 - Daily pain logging with VAS

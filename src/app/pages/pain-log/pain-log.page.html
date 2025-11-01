@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>{{ 'PAIN_LOG' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <ion-card class="modern-card" *ngIf="todayScore === null">
+      <ion-card-content>
+        <h3 style="margin: 0 0 24px 0;">{{ 'LOG_PAIN' | translate }}</h3>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+          <span>{{ 'VAS_NO_PAIN' | translate }}</span>
+          <span>{{ 'VAS_WORST_PAIN' | translate }}</span>
+        </div>
+        <ion-range
+          [(ngModel)]="todayScore"
+          min="0"
+          max="10"
+          step="0.5"
+          pin="true"
+          color="primary">
+        </ion-range>
+        <ion-button 
+          expand="block" 
+          class="rounded-button rounded-button--primary"
+          style="margin-top: 24px;"
+          (click)="logPain(todayScore!)"
+          [disabled]="todayScore === null">
+          {{ 'SAVE' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="modern-card" *ngIf="todayScore !== null">
+      <ion-card-content>
+        <h3 style="margin: 0 0 8px 0;">{{ 'TODAY' | translate }}</h3>
+        <p style="font-size: 32px; color: var(--ion-color-primary); margin: 0; font-weight: 600;">
+          {{ todayScore }}
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="modern-card" *ngIf="painLogs.length > 0">
+      <ion-card-header>
+        <ion-card-title>History</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let log of painLogs.slice().reverse()">
+            <ion-label>
+              <h3>{{ log.loggedAt | date:'short' }}</h3>
+            </ion-label>
+            <ion-badge color="primary" slot="end">{{ log.vasScore }}</ion-badge>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

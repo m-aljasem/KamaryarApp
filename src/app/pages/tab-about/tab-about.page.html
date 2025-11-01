@@ -1,0 +1,194 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'ABOUT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <!-- App Header -->
+    <ion-card class="modern-card modern-card--primary" style="margin-bottom: 24px;">
+      <ion-card-content style="text-align: center; padding: 32px 16px;">
+        <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <ion-icon name="medical-outline" style="font-size: 64px; color: white;"></ion-icon>
+        </div>
+        <h1 style="color: white; margin: 0 0 8px 0; font-size: 28px; font-weight: 700;">{{ 'APP_NAME' | translate }}</h1>
+        <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 16px;">{{ 'ABOUT_DESCRIPTION' | translate }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Features -->
+    <ion-card class="modern-card" style="margin-bottom: 16px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="star-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-primary);"></ion-icon>
+          {{ 'FEATURES' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item style="--padding-start: 0; margin-bottom: 12px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade)); border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+              <ion-icon name="analytics-outline" style="color: white; font-size: 24px;"></ion-icon>
+            </div>
+            <ion-label>
+              <h3 style="margin: 0 0 4px 0; font-weight: 600;">{{ 'PERSONALIZED_ASSESSMENT' | translate }}</h3>
+              <p style="color: var(--ion-color-medium); margin: 0; font-size: 14px;">{{ 'PERSONALIZED_ASSESSMENT_DESC' | translate }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item style="--padding-start: 0; margin-bottom: 12px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-secondary), var(--ion-color-secondary-shade)); border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+              <ion-icon name="calendar-outline" style="color: white; font-size: 24px;"></ion-icon>
+            </div>
+            <ion-label>
+              <h3 style="margin: 0 0 4px 0; font-weight: 600;">{{ 'WEEKLY_PLAN' | translate }}</h3>
+              <p style="color: var(--ion-color-medium); margin: 0; font-size: 14px;">{{ 'WEEKLY_PLAN_DESC' | translate }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item style="--padding-start: 0; margin-bottom: 12px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-success), var(--ion-color-success-shade)); border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+              <ion-icon name="trending-down-outline" style="color: white; font-size: 24px;"></ion-icon>
+            </div>
+            <ion-label>
+              <h3 style="margin: 0 0 4px 0; font-weight: 600;">{{ 'PROGRESS_TRACKING' | translate }}</h3>
+              <p style="color: var(--ion-color-medium); margin: 0; font-size: 14px;">{{ 'PROGRESS_TRACKING_DESC' | translate }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item style="--padding-start: 0;">
+            <div style="background: linear-gradient(135deg, #ff9800, #f57c00); border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+              <ion-icon name="fitness-outline" style="color: white; font-size: 24px;"></ion-icon>
+            </div>
+            <ion-label>
+              <h3 style="margin: 0 0 4px 0; font-weight: 600;">{{ 'EXERCISES_AND_MEDITATION' | translate }}</h3>
+              <p style="color: var(--ion-color-medium); margin: 0; font-size: 14px;">{{ 'EXERCISES_AND_MEDITATION_DESC' | translate }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- How It Works -->
+    <ion-card class="modern-card" style="margin-bottom: 16px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="information-circle-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-primary);"></ion-icon>
+          {{ 'HOW_IT_WORKS' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: flex; align-items: flex-start; gap: 16px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade)); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0; box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);">1</div>
+            <div style="flex: 1;">
+              <h4 style="margin: 0 0 6px 0; font-weight: 600; color: var(--ion-color-dark);">{{ 'STEP_1_TITLE' | translate }}</h4>
+              <p style="margin: 0; color: var(--ion-color-medium); font-size: 14px; line-height: 1.5;">{{ 'STEP_1_DESC' | translate }}</p>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 16px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-secondary), var(--ion-color-secondary-shade)); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);">2</div>
+            <div style="flex: 1;">
+              <h4 style="margin: 0 0 6px 0; font-weight: 600; color: var(--ion-color-dark);">{{ 'STEP_2_TITLE' | translate }}</h4>
+              <p style="margin: 0; color: var(--ion-color-medium); font-size: 14px; line-height: 1.5;">{{ 'STEP_2_DESC' | translate }}</p>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 16px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-success), var(--ion-color-success-shade)); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);">3</div>
+            <div style="flex: 1;">
+              <h4 style="margin: 0 0 6px 0; font-weight: 600; color: var(--ion-color-dark);">{{ 'STEP_3_TITLE' | translate }}</h4>
+              <p style="margin: 0; color: var(--ion-color-medium); font-size: 14px; line-height: 1.5;">{{ 'STEP_3_DESC' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Tips -->
+    <ion-card class="modern-card" style="margin-bottom: 16px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="bulb-outline" style="margin-right: 8px; vertical-align: middle; color: #ff9800;"></ion-icon>
+          {{ 'TIPS' | translate }}
+        </ion-card-title>
+        <p style="color: var(--ion-color-medium); margin: 8px 0 0 0; font-size: 14px;">{{ 'TIPS_DESC' | translate }}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item style="--padding-start: 0; margin-bottom: 12px;">
+            <ion-icon name="checkmark-circle" slot="start" style="color: var(--ion-color-success); font-size: 20px;"></ion-icon>
+            <ion-label>
+              <p style="margin: 0; color: var(--ion-color-dark);">{{ 'TIP_1' | translate }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item style="--padding-start: 0; margin-bottom: 12px;">
+            <ion-icon name="checkmark-circle" slot="start" style="color: var(--ion-color-success); font-size: 20px;"></ion-icon>
+            <ion-label>
+              <p style="margin: 0; color: var(--ion-color-dark);">{{ 'TIP_2' | translate }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item style="--padding-start: 0;">
+            <ion-icon name="checkmark-circle" slot="start" style="color: var(--ion-color-success); font-size: 20px;"></ion-icon>
+            <ion-label>
+              <p style="margin: 0; color: var(--ion-color-dark);">{{ 'TIP_3' | translate }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Testimonials -->
+    <ion-card class="modern-card" style="margin-bottom: 16px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="chatbubbles-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-primary);"></ion-icon>
+          {{ 'TESTIMONIALS' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="background: var(--ion-color-light); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+          </div>
+          <p style="margin: 0; color: var(--ion-color-dark); font-style: italic; line-height: 1.6;">"{{ 'TESTIMONIAL_1' | translate }}"</p>
+        </div>
+        <div style="background: var(--ion-color-light); border-radius: 12px; padding: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+            <ion-icon name="star" style="color: #ffc107; font-size: 16px;"></ion-icon>
+          </div>
+          <p style="margin: 0; color: var(--ion-color-dark); font-style: italic; line-height: 1.6;">"{{ 'TESTIMONIAL_2' | translate }}"</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- App Info -->
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 12px; background: var(--ion-color-light); border-radius: 8px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <ion-icon name="information-circle" style="color: var(--ion-color-primary); font-size: 20px;"></ion-icon>
+            <span style="font-weight: 600;">{{ 'VERSION' | translate }}</span>
+          </div>
+          <ion-badge color="primary" style="font-size: 14px; padding: 4px 12px;">1.0.0</ion-badge>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 12px; background: var(--ion-color-light); border-radius: 8px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <ion-icon name="globe-outline" style="color: var(--ion-color-primary); font-size: 20px;"></ion-icon>
+            <span style="font-weight: 600;">{{ 'LANGUAGE' | translate }}</span>
+          </div>
+          <span style="color: var(--ion-color-medium); font-size: 14px;">English, فارسی, العربية</span>
+        </div>
+        <div style="text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--ion-color-light);">
+          <p style="color: var(--ion-color-medium); margin: 0; font-size: 14px;">{{ 'DEVELOPED_WITH' | translate }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

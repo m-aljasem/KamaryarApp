@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>{{ 'WEEKLY_PLAN' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding" *ngIf="weeklyPlan">
+    <div *ngFor="let day of days" style="margin-bottom: 16px;">
+      <ion-card class="modern-card">
+        <ion-card-header>
+          <ion-card-title>
+            {{ day.name }}
+            <ion-badge *ngIf="day.id === currentDay" color="primary" style="margin-inline-start: 8px;">
+              {{ 'TODAY' | translate }}
+            </ion-badge>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="getActivitiesForDay(day.id).length === 0" style="color: var(--ion-color-medium); text-align: center; padding: 24px;">
+            No activities
+          </div>
+          <ion-list *ngIf="getActivitiesForDay(day.id).length > 0">
+            <ion-item 
+              *ngFor="let activity of getActivitiesForDay(day.id)"
+              (click)="goToActivity(activity)"
+              style="cursor: pointer; margin-bottom: 8px; border-radius: var(--ion-border-radius);">
+              <ion-checkbox 
+                [checked]="activity.status === 'complete'"
+                (ionChange)="completeActivity(activity)"
+                slot="start">
+              </ion-checkbox>
+              <ion-label>
+                <h3>{{ activity.contentType }}</h3>
+              </ion-label>
+              <ion-icon 
+                [name]="activity.status === 'complete' ? 'checkmark-circle' : 'ellipse-outline'"
+                [color]="activity.status === 'complete' ? 'success' : 'medium'"
+                slot="end">
+              </ion-icon>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
+

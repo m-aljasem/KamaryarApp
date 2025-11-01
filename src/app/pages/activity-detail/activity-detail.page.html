@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>{{ contentType }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding" *ngIf="content">
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <h2>{{ getLocalizedText(content.name || content.title) }}</h2>
+        <p style="color: var(--ion-color-medium); margin-top: 8px;">
+          {{ getLocalizedText(content.description || content.body) }}
+        </p>
+
+        <div *ngIf="contentType === 'exercise' && content.videoUrl" style="margin: 24px 0;">
+          <video 
+            [src]="content.videoUrl" 
+            controls
+            style="width: 100%; border-radius: var(--ion-border-radius);">
+          </video>
+        </div>
+
+        <div *ngIf="contentType === 'meditation' && content.audioUrl" style="margin: 24px 0;">
+          <audio [src]="content.audioUrl" controls style="width: 100%;"></audio>
+        </div>
+
+        <div *ngIf="contentType === 'education' && content.imageUrl" style="margin: 24px 0;">
+          <img [src]="content.imageUrl" style="width: 100%; border-radius: var(--ion-border-radius);" />
+        </div>
+
+        <ion-button 
+          expand="block" 
+          class="rounded-button rounded-button--primary"
+          (click)="completeActivity()">
+          {{ 'COMPLETE' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

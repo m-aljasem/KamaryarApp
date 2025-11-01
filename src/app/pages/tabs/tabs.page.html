@@ -1,0 +1,31 @@
+<ion-tabs>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="about" href="/tabs/about">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <ion-label>{{ 'ABOUT' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile" href="/tabs/profile">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>{{ 'PROFILE' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="dashboard-tab" href="/tabs/dashboard-tab">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>{{ 'DASHBOARD' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="log" href="/tabs/log">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label>{{ 'LOG' | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="exercises" href="/tabs/exercises">
+      <ion-icon name="fitness-outline"></ion-icon>
+      <ion-label>{{ 'EXERCISES' | translate }}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+

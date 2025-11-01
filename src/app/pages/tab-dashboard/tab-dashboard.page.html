@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'DASHBOARD' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <!-- Welcome Card -->
+    <ion-card class="modern-card modern-card--primary" *ngIf="user" style="margin-bottom: 24px;">
+      <ion-card-content style="padding: 24px 16px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <ion-icon name="person-circle" style="font-size: 40px; color: white;"></ion-icon>
+          </div>
+          <div style="flex: 1;">
+            <h2 style="color: white; margin: 0 0 4px 0; font-size: 24px; font-weight: 700;">{{ 'WELCOME_BACK' | translate }}, {{ user.firstName }}!</h2>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 14px;">{{ 'ADHERENCE' | translate }}: <strong style="font-size: 18px;">{{ adherence }}%</strong></p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Motivational Quote -->
+    <ion-card class="modern-card" style="margin-bottom: 24px; background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(76, 175, 80, 0.1)); border-left: 4px solid var(--ion-color-primary);">
+      <ion-card-content style="padding: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+          <ion-icon name="chatbubble-ellipses-outline" style="font-size: 24px; color: var(--ion-color-primary); flex-shrink: 0; margin-top: 4px;"></ion-icon>
+          <p style="margin: 0; color: var(--ion-color-dark); font-style: italic; line-height: 1.6; font-size: 15px;">{{ motivationalQuote | translate }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Quick Stats -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+      <ion-card class="modern-card" style="margin: 0; background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(33, 150, 243, 0.02));">
+        <ion-card-content style="text-align: center; padding: 20px 16px;">
+          <div style="background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade)); border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);">
+            <ion-icon name="fitness-outline" style="font-size: 24px; color: white;"></ion-icon>
+          </div>
+          <p style="font-size: 32px; font-weight: 700; color: var(--ion-color-primary); margin: 0;">{{ painLogs.length }}</p>
+          <p style="margin: 4px 0 0 0; color: var(--ion-color-medium); font-size: 12px; font-weight: 500;">{{ 'TOTAL_LOGS' | translate }}</p>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="modern-card" *ngIf="latestRMDQ" style="margin: 0; background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(76, 175, 80, 0.02));">
+        <ion-card-content style="text-align: center; padding: 20px 16px;">
+          <div style="background: linear-gradient(135deg, var(--ion-color-success), var(--ion-color-success-shade)); border-radius: 12px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);">
+            <ion-icon name="stats-chart-outline" style="font-size: 24px; color: white;"></ion-icon>
+          </div>
+          <p style="font-size: 32px; font-weight: 700; color: var(--ion-color-success); margin: 0;">{{ latestRMDQ.score }}</p>
+          <p style="margin: 4px 0 0 0; color: var(--ion-color-medium); font-size: 12px; font-weight: 500;">{{ 'RMDQ' | translate }} {{ 'SCORE' | translate }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Quick Actions -->
+    <ion-card class="modern-card" (click)="goToWeeklyPlan()" style="cursor: pointer; margin-bottom: 16px;">
+      <ion-card-content>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade)); border-radius: 12px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <ion-icon name="calendar-outline" style="font-size: 28px; color: white;"></ion-icon>
+          </div>
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 4px 0;">{{ 'WEEKLY_PLAN' | translate }}</h3>
+            <p style="margin: 0; color: var(--ion-color-medium); font-size: 14px;">{{ 'DAILY_ACTIVITIES' | translate }}</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" style="color: var(--ion-color-medium);"></ion-icon>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="modern-card" (click)="goToPainLog()" style="cursor: pointer; margin-bottom: 16px;">
+      <ion-card-content>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: linear-gradient(135deg, var(--ion-color-secondary), var(--ion-color-secondary-shade)); border-radius: 12px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <ion-icon name="analytics-outline" style="font-size: 28px; color: white;"></ion-icon>
+          </div>
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 4px 0;">{{ 'PAIN_LOG' | translate }}</h3>
+            <p style="margin: 0; color: var(--ion-color-medium); font-size: 14px;">{{ painLogs.length }} {{ 'ENTRIES' | translate }}</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" style="color: var(--ion-color-medium);"></ion-icon>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- VAS Pain Intensity Chart -->
+    <ion-card class="modern-card" *ngIf="vasChartData && painLogs.length > 0" style="margin-bottom: 16px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="pulse-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-primary);"></ion-icon>
+          {{ 'PAIN_INTENSITY_OVER_TIME' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content style="padding-top: 8px;">
+        <div style="height: 250px;">
+          <app-chart 
+            type="line" 
+            [data]="vasChartData"
+            [options]="getVASChartOptions()">
+          </app-chart>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- RMDQ Score Chart -->
+    <ion-card class="modern-card" *ngIf="rmqdChartData && rmqdAssessments.length > 0" style="margin-bottom: 16px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="trending-up-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-success);"></ion-icon>
+          {{ 'RMDQ_SCORE_OVER_TIME' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content style="padding-top: 8px;">
+        <div style="height: 250px;">
+          <app-chart 
+            type="line" 
+            [data]="rmqdChartData"
+            [options]="getRMDQChartOptions()">
+          </app-chart>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

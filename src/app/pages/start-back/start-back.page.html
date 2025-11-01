@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'START_BACK_SCREENING' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <p style="margin-bottom: 24px; color: var(--ion-color-medium);">
+          {{ 'START_BACK_DESCRIPTION' | translate }}
+        </p>
+
+        <div style="margin-bottom: 24px;">
+          <ion-progress-bar [value]="progress / 100" color="primary"></ion-progress-bar>
+          <p style="text-align: center; margin-top: 8px; color: var(--ion-color-medium);">
+            {{ currentQuestion }} / {{ totalQuestions }}
+          </p>
+        </div>
+
+        <div *ngIf="currentQuestion <= totalQuestions" style="min-height: 200px;">
+          <h2 style="margin-bottom: 24px; color: var(--ion-color-primary);">
+            {{ 'QUESTION' | translate }} {{ currentQuestion }} {{ 'OF' | translate }} {{ totalQuestions }}
+          </h2>
+          <p style="margin-bottom: 32px; color: var(--ion-color-dark); font-size: 16px; line-height: 1.6;">
+            {{ getCurrentQuestionText() }}
+          </p>
+          
+          <!-- Questions 1-8: Yes/No answers -->
+          <div *ngIf="!isLastQuestion()">
+            <ion-segment 
+              [value]="answers[currentQuestion]" 
+              (ionChange)="answer(currentQuestion, $event.detail.value)">
+              <ion-segment-button [value]="0">
+                <ion-label>{{ 'NO' | translate }}</ion-label>
+              </ion-segment-button>
+              <ion-segment-button [value]="1">
+                <ion-label>{{ 'YES' | translate }}</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </div>
+
+          <!-- Question 9: 5-point scale -->
+          <div *ngIf="isLastQuestion()" style="margin-bottom: 24px;">
+            <ion-segment 
+              [value]="answers[currentQuestion]" 
+              (ionChange)="answer(currentQuestion, $event.detail.value)">
+              <ion-segment-button [value]="1">
+                <ion-label style="font-size: 11px; white-space: normal;">1<br/>{{ 'NOT_AT_ALL' | translate }}</ion-label>
+              </ion-segment-button>
+              <ion-segment-button [value]="2">
+                <ion-label style="font-size: 11px; white-space: normal;">2<br/>{{ 'SLIGHTLY' | translate }}</ion-label>
+              </ion-segment-button>
+              <ion-segment-button [value]="3">
+                <ion-label style="font-size: 11px; white-space: normal;">3<br/>{{ 'MODERATELY' | translate }}</ion-label>
+              </ion-segment-button>
+              <ion-segment-button [value]="4">
+                <ion-label style="font-size: 11px; white-space: normal;">4<br/>{{ 'VERY_MUCH' | translate }}</ion-label>
+              </ion-segment-button>
+              <ion-segment-button [value]="5">
+                <ion-label style="font-size: 11px; white-space: normal;">5<br/>{{ 'EXTREMELY' | translate }}</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </div>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <ion-button 
+            *ngIf="currentQuestion > 1"
+            expand="block" 
+            fill="outline"
+            class="rounded-button"
+            [style.flex]="canSubmit ? '1' : '1'"
+            (click)="goToPreviousQuestion()">
+            <ion-icon name="arrow-back" slot="start"></ion-icon>
+            {{ 'BACK' | translate }}
+          </ion-button>
+          <ion-button 
+            *ngIf="canSubmit"
+            expand="block" 
+            class="rounded-button rounded-button--primary"
+            [style.flex]="currentQuestion > 1 ? '1' : '1'"
+            (click)="submit()">
+            {{ 'SUBMIT' | translate }}
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

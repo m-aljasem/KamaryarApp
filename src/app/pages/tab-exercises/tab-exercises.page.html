@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'EXERCISES' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <!-- Header Card -->
+    <ion-card class="modern-card modern-card--primary" style="margin-bottom: 24px;">
+      <ion-card-content style="padding: 24px 16px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="background: rgba(255, 255, 255, 0.2); border-radius: 16px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;">
+            <ion-icon name="fitness" style="font-size: 32px; color: white;"></ion-icon>
+          </div>
+          <div style="flex: 1;">
+            <h2 style="color: white; margin: 0 0 4px 0; font-size: 24px; font-weight: 700;">{{ 'EXERCISE_LIBRARY' | translate }}</h2>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 14px;">{{ filteredExercises.length }} {{ 'EXERCISES_AVAILABLE' | translate }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Search Bar -->
+    <ion-item class="modern-card" style="margin-bottom: 16px; --padding-start: 0; border-radius: 12px;">
+      <ion-icon name="search-outline" slot="start" style="color: var(--ion-color-medium);"></ion-icon>
+      <ion-input
+        type="text"
+        [placeholder]="'SEARCH_EXERCISES' | translate"
+        [(ngModel)]="searchTerm"
+        (ionInput)="onSearchChange($event)"
+        clearInput="true">
+      </ion-input>
+    </ion-item>
+
+    <!-- Filter Buttons -->
+    <div style="display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 8px;">
+      <ion-chip 
+        [color]="selectedDifficulty === 'all' ? 'primary' : 'medium'"
+        (click)="onDifficultyChange('all')"
+        style="cursor: pointer;">
+        <ion-label>{{ 'ALL_EXERCISES' | translate }}</ion-label>
+      </ion-chip>
+      <ion-chip 
+        [color]="selectedDifficulty === 'easy' ? 'success' : 'medium'"
+        (click)="onDifficultyChange('easy')"
+        style="cursor: pointer;">
+        <ion-icon [name]="getDifficultyIcon('easy')" style="margin-right: 4px;"></ion-icon>
+        <ion-label>{{ 'EASY' | translate }}</ion-label>
+      </ion-chip>
+      <ion-chip 
+        [color]="selectedDifficulty === 'medium' ? 'warning' : 'medium'"
+        (click)="onDifficultyChange('medium')"
+        style="cursor: pointer;">
+        <ion-icon [name]="getDifficultyIcon('medium')" style="margin-right: 4px;"></ion-icon>
+        <ion-label>{{ 'MEDIUM' | translate }}</ion-label>
+      </ion-chip>
+      <ion-chip 
+        [color]="selectedDifficulty === 'hard' ? 'danger' : 'medium'"
+        (click)="onDifficultyChange('hard')"
+        style="cursor: pointer;">
+        <ion-icon [name]="getDifficultyIcon('hard')" style="margin-right: 4px;"></ion-icon>
+        <ion-label>{{ 'HARD' | translate }}</ion-label>
+      </ion-chip>
+    </div>
+
+    <!-- Exercise Cards -->
+    <div *ngFor="let exercise of filteredExercises; let i = index">
+      <ion-card class="modern-card" (click)="goToActivity(exercise.id)" style="cursor: pointer; margin-bottom: 16px; transition: transform 0.2s;" [style.transform]="'scale(1)'">
+        <ion-card-content style="padding: 16px;">
+          <div style="display: flex; align-items: flex-start; gap: 16px;">
+            <div style="background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary)); border-radius: 16px; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);">
+              <ion-icon name="fitness-outline" style="font-size: 36px; color: white;"></ion-icon>
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
+                <h3 style="margin: 0; color: var(--ion-color-dark); font-weight: 600; font-size: 18px; flex: 1;">{{ exercise.title?.en || exercise.title }}</h3>
+                <ion-badge [color]="getDifficultyColor(exercise.difficulty)" style="font-size: 11px; padding: 4px 8px;">
+                  {{ exercise.difficulty || 'MEDIUM' | translate }}
+                </ion-badge>
+              </div>
+              <p style="margin: 0 0 12px 0; color: var(--ion-color-medium); line-height: 1.5; font-size: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                {{ exercise.description?.en || exercise.description }}
+              </p>
+              <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <ion-chip color="primary" outline="true" style="margin: 0;">
+                  <ion-icon name="time-outline" style="margin-right: 4px; font-size: 14px;"></ion-icon>
+                  <ion-label style="font-size: 12px;">{{ exercise.duration || 10 }} {{ 'MINUTES' | translate }}</ion-label>
+                </ion-chip>
+                <ion-chip color="primary" style="margin: 0;">
+                  <ion-icon name="play-outline" style="margin-right: 4px; font-size: 14px;"></ion-icon>
+                  <ion-label style="font-size: 12px;">{{ 'VIEW_EXERCISE' | translate }}</ion-label>
+                </ion-chip>
+              </div>
+            </div>
+            <ion-icon name="chevron-forward-outline" style="color: var(--ion-color-medium); flex-shrink: 0; margin-top: 4px;"></ion-icon>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Empty State -->
+    <ion-card class="modern-card" *ngIf="filteredExercises.length === 0">
+      <ion-card-content style="text-align: center; padding: 48px 16px;">
+        <ion-icon name="fitness-outline" style="font-size: 64px; color: var(--ion-color-medium); margin-bottom: 16px;"></ion-icon>
+        <h3 style="margin: 0 0 8px 0; color: var(--ion-color-dark);">{{ 'NO_EXERCISES' | translate }}</h3>
+        <p style="color: var(--ion-color-medium); margin: 0;">{{ searchTerm || selectedDifficulty !== 'all' ? ('NO_EXERCISES_DESCRIPTION' | translate) : ('NO_EXERCISES_DESCRIPTION' | translate) }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

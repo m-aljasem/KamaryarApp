@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'PROFILE' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <!-- User Summary Card -->
+    <ion-card class="modern-card modern-card--primary" *ngIf="profile.firstName" style="margin-bottom: 24px;">
+      <ion-card-content style="text-align: center; padding: 24px 16px;">
+        <div style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <ion-icon name="person" style="font-size: 48px; color: white;"></ion-icon>
+        </div>
+        <h2 style="color: white; margin: 0 0 4px 0;">{{ profile.firstName }} {{ profile.lastName }}</h2>
+        <p style="color: rgba(255, 255, 255, 0.9); margin: 0;">{{ profile.age }} {{ 'YEARS_OLD' | translate }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="modern-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="person-circle-outline" style="margin-right: 8px; vertical-align: middle;"></ion-icon>
+          {{ 'PROFILE_INFORMATION' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form (ngSubmit)="saveProfile()">
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'FIRST_NAME' | translate }}</ion-label>
+            <ion-input 
+              type="text" 
+              [(ngModel)]="profile.firstName" 
+              name="firstName"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'LAST_NAME' | translate }}</ion-label>
+            <ion-input 
+              type="text" 
+              [(ngModel)]="profile.lastName" 
+              name="lastName"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'GENDER' | translate }}</ion-label>
+            <ion-select [(ngModel)]="profile.gender" name="gender" interface="popover">
+              <ion-select-option *ngFor="let gender of genders" [value]="gender">
+                {{ getGenderTranslationKey(gender) | translate }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'AGE' | translate }}</ion-label>
+            <ion-input 
+              type="number" 
+              [(ngModel)]="profile.age" 
+              name="age"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'COUNTRY' | translate }}</ion-label>
+            <ion-input 
+              type="text" 
+              [(ngModel)]="profile.countryName" 
+              name="countryName"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'BACK_PAIN_YEARS' | translate }}</ion-label>
+            <ion-input 
+              type="number" 
+              [(ngModel)]="profile.backPainYears" 
+              name="backPainYears"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'JOB_TYPE' | translate }}</ion-label>
+            <ion-select [(ngModel)]="profile.jobType" name="jobType" interface="popover">
+              <ion-select-option *ngFor="let jobType of jobTypes" [value]="jobType">
+                {{ getJobTypeTranslationKey(jobType) | translate }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'ACTIVITY_LEVEL' | translate }}</ion-label>
+            <ion-select [(ngModel)]="profile.weeklyActivityLevel" name="activityLevel" interface="popover">
+              <ion-select-option *ngFor="let level of activityLevels" [value]="level">
+                {{ getActivityLevelTranslationKey(level) | translate }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button 
+            expand="block" 
+            type="submit"
+            class="rounded-button rounded-button--primary"
+            style="margin-top: 24px;">
+            {{ 'SAVE' | translate }}
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

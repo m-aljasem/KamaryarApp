@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'RED_FLAG_SCREENING' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <p style="margin-bottom: 24px; color: var(--ion-color-medium);">
+          {{ 'RED_FLAG_DESCRIPTION' | translate }}
+        </p>
+
+        <div *ngFor="let question of questions" style="margin-bottom: 24px;">
+          <p style="font-weight: 600; margin-bottom: 12px;">
+            {{ question.key | translate }}
+          </p>
+          <ion-segment [(ngModel)]="answers[question.id]" [disabled]="false">
+            <ion-segment-button [value]="false">
+              <ion-label>{{ 'NO' | translate }}</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="true">
+              <ion-label>{{ 'YES' | translate }}</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          class="rounded-button rounded-button--primary"
+          (click)="submit()"
+          [disabled]="!allQuestionsAnswered">
+          {{ 'SUBMIT' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

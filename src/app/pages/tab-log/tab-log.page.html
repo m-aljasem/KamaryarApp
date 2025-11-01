@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'LOG' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <!-- Today's Pain Log -->
+    <ion-card class="modern-card" *ngIf="todayScore === null" style="margin-bottom: 24px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="calendar-outline" style="margin-right: 8px; vertical-align: middle;"></ion-icon>
+          {{ 'LOG_PAIN' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p style="color: var(--ion-color-medium); margin-bottom: 24px;">{{ 'LOG_PAIN_DESCRIPTION' | translate }}</p>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center;">
+          <span style="font-size: 12px; color: var(--ion-color-medium);">{{ 'VAS_NO_PAIN' | translate }}</span>
+          <span style="font-size: 20px; font-weight: 600; color: var(--ion-color-primary);">{{ todayScore !== null ? todayScore : '0' }}</span>
+          <span style="font-size: 12px; color: var(--ion-color-medium);">{{ 'VAS_WORST_PAIN' | translate }}</span>
+        </div>
+        
+        <ion-range
+          [(ngModel)]="todayScore"
+          min="0"
+          max="10"
+          step="0.5"
+          pin="true"
+          color="primary"
+          style="margin-bottom: 8px;">
+        </ion-range>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+          <span style="font-size: 11px; color: var(--ion-color-medium);">0</span>
+          <span style="font-size: 11px; color: var(--ion-color-medium);">5</span>
+          <span style="font-size: 11px; color: var(--ion-color-medium);">10</span>
+        </div>
+        
+        <ion-button 
+          expand="block" 
+          class="rounded-button rounded-button--primary"
+          (click)="logPain(todayScore!)"
+          [disabled]="todayScore === null">
+          <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+          {{ 'SAVE' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Today's Score Display -->
+    <ion-card class="modern-card modern-card--primary" *ngIf="todayScore !== null" style="margin-bottom: 24px;">
+      <ion-card-content style="text-align: center; padding: 32px 16px;">
+        <ion-icon name="checkmark-circle" style="font-size: 48px; color: white; margin-bottom: 16px;"></ion-icon>
+        <h3 style="color: white; margin: 0 0 8px 0;">{{ 'TODAY_LOGGED' | translate }}</h3>
+        <div style="background: rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 16px; display: inline-block; margin-top: 8px;">
+          <p style="font-size: 48px; color: white; margin: 0; font-weight: 700;">{{ todayScore }}</p>
+          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.9); margin: 4px 0 0 0;">/ 10</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Statistics -->
+    <ion-card class="modern-card" *ngIf="painLogs.length > 0" style="margin-bottom: 24px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="stats-chart-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-primary);"></ion-icon>
+          {{ 'STATISTICS' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05)); border-radius: 12px; border: 1px solid rgba(33, 150, 243, 0.2);">
+            <ion-icon name="document-text-outline" style="font-size: 24px; color: var(--ion-color-primary); margin-bottom: 8px;"></ion-icon>
+            <p style="font-size: 28px; font-weight: 700; color: var(--ion-color-primary); margin: 0;">{{ painLogs.length }}</p>
+            <p style="margin: 4px 0 0 0; color: var(--ion-color-medium); font-size: 12px;">{{ 'TOTAL_LOGS' | translate }}</p>
+          </div>
+          <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05)); border-radius: 12px; border: 1px solid rgba(76, 175, 80, 0.2);">
+            <ion-icon name="bar-chart-outline" style="font-size: 24px; color: var(--ion-color-success); margin-bottom: 8px;"></ion-icon>
+            <p style="font-size: 28px; font-weight: 700; color: var(--ion-color-success); margin: 0;">{{ getAverageScore() | number:'1.1-1' }}</p>
+            <p style="margin: 4px 0 0 0; color: var(--ion-color-medium); font-size: 12px;">{{ 'AVERAGE_SCORE' | translate }}</p>
+          </div>
+        </div>
+        
+        <!-- Trend and Streak -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 152, 0, 0.05)); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.2);">
+            <ion-icon [name]="getTrend() === 'IMPROVING' ? 'trending-down' : getTrend() === 'WORSENING' ? 'trending-up' : 'remove-outline'" 
+              [style.color]="getTrend() === 'IMPROVING' ? 'var(--ion-color-success)' : getTrend() === 'WORSENING' ? 'var(--ion-color-danger)' : 'var(--ion-color-medium)'"
+              style="font-size: 24px; margin-bottom: 8px;"></ion-icon>
+            <p style="font-size: 14px; font-weight: 600; color: var(--ion-color-dark); margin: 0 0 4px 0;">{{ 'TREND' | translate }}</p>
+            <p style="margin: 0; color: var(--ion-color-medium); font-size: 12px; text-transform: capitalize;">{{ (getTrend() | uppercase) | translate }}</p>
+          </div>
+          <div style="text-align: center; padding: 16px; background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(156, 39, 176, 0.05)); border-radius: 12px; border: 1px solid rgba(156, 39, 176, 0.2);">
+            <ion-icon name="flame" style="font-size: 24px; color: #ff9800; margin-bottom: 8px;"></ion-icon>
+            <p style="font-size: 28px; font-weight: 700; color: #ff9800; margin: 0;">{{ getStreak() }}</p>
+            <p style="margin: 4px 0 0 0; color: var(--ion-color-medium); font-size: 12px;">{{ 'DAY_STREAK' | translate }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Weekly Summary -->
+    <ion-card class="modern-card" *ngIf="painLogs.length > 0" style="margin-bottom: 24px;">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="calendar-outline" style="margin-right: 8px; vertical-align: middle; color: var(--ion-color-primary);"></ion-icon>
+          {{ 'WEEKLY_SUMMARY' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="padding: 16px; background: var(--ion-color-success-tint); border-radius: 12px; border-left: 4px solid var(--ion-color-success);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <ion-icon name="thumbs-up-outline" style="color: var(--ion-color-success); font-size: 20px;"></ion-icon>
+              <p style="margin: 0; font-size: 12px; color: var(--ion-color-medium); font-weight: 600;">{{ 'BEST_DAY' | translate }}</p>
+            </div>
+            <p style="margin: 0 0 4px 0; font-size: 24px; font-weight: 700; color: var(--ion-color-success);">{{ getWeeklyStats().bestScore | number:'1.0-1' }}</p>
+            <p style="margin: 0; font-size: 11px; color: var(--ion-color-medium);" *ngIf="getWeeklyStats().best">
+              {{ getWeeklyStats().best | date:'MMM d' }}
+            </p>
+          </div>
+          <div style="padding: 16px; background: var(--ion-color-danger-tint); border-radius: 12px; border-left: 4px solid var(--ion-color-danger);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <ion-icon name="alert-circle-outline" style="color: var(--ion-color-danger); font-size: 20px;"></ion-icon>
+              <p style="margin: 0; font-size: 12px; color: var(--ion-color-medium); font-weight: 600;">{{ 'WORST_DAY' | translate }}</p>
+            </div>
+            <p style="margin: 0 0 4px 0; font-size: 24px; font-weight: 700; color: var(--ion-color-danger);">{{ getWeeklyStats().worstScore | number:'1.0-1' }}</p>
+            <p style="margin: 0; font-size: 11px; color: var(--ion-color-medium);" *ngIf="getWeeklyStats().worst">
+              {{ getWeeklyStats().worst | date:'MMM d' }}
+            </p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- History -->
+    <ion-card class="modern-card" *ngIf="painLogs.length > 0">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="time-outline" style="margin-right: 8px; vertical-align: middle;"></ion-icon>
+          {{ 'HISTORY' | translate }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="full">
+          <ion-item *ngFor="let log of painLogs.slice().reverse(); let i = index" style="--padding-start: 0; --inner-padding-end: 0;">
+            <ion-avatar slot="start" style="background: var(--ion-color-primary-tint); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+              <span style="color: var(--ion-color-primary); font-weight: 600;">{{ log.vasScore }}</span>
+            </ion-avatar>
+            <ion-label>
+              <h3 style="margin: 0;">{{ log.loggedAt | date:'EEEE, MMMM d' }}</h3>
+              <p style="margin: 4px 0 0 0; color: var(--ion-color-medium);">{{ log.loggedAt | date:'h:mm a' }}</p>
+            </ion-label>
+            <div slot="end" style="width: 60px; height: 8px; background: var(--ion-color-light); border-radius: 4px; overflow: hidden;">
+              <div [style.width.%]="(log.vasScore / 10 * 100)" style="height: 100%; background: var(--ion-color-primary); border-radius: 4px;"></div>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Empty State -->
+    <ion-card class="modern-card" *ngIf="painLogs.length === 0 && todayScore === null">
+      <ion-card-content style="text-align: center; padding: 48px 16px;">
+        <ion-icon name="calendar-clear-outline" style="font-size: 64px; color: var(--ion-color-medium); margin-bottom: 16px;"></ion-icon>
+        <p style="color: var(--ion-color-medium); margin: 0;">{{ 'NO_PAIN_LOGS_YET' | translate }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

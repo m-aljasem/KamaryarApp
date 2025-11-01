@@ -1,0 +1,78 @@
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding" style="min-height: 100%; display: flex; flex-direction: column; justify-content: center;">
+    <div style="text-align: center; margin-bottom: 48px;">
+      <h1 class="title-large" style="color: var(--ion-color-primary);">
+        {{ 'APP_NAME' | translate }}
+      </h1>
+      <p style="font-size: 16px; color: var(--ion-color-medium); margin-top: 8px;">
+        {{ 'SIGN_UP' | translate }}
+      </p>
+    </div>
+
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <form (ngSubmit)="register()">
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'EMAIL' | translate }}</ion-label>
+            <ion-input 
+              type="email" 
+              [(ngModel)]="email" 
+              name="email"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'PASSWORD' | translate }}</ion-label>
+            <ion-input 
+              type="password" 
+              [(ngModel)]="password" 
+              name="password"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="modern-input">
+            <ion-label position="stacked">{{ 'CONFIRM_PASSWORD' | translate }}</ion-label>
+            <ion-input 
+              type="password" 
+              [(ngModel)]="confirmPassword" 
+              name="confirmPassword"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-button 
+            expand="block" 
+            type="submit"
+            class="rounded-button rounded-button--primary"
+            style="margin-top: 24px;">
+            {{ 'SIGN_UP' | translate }}
+          </ion-button>
+        </form>
+
+        <div style="margin: 24px 0; text-align: center;">
+          <span style="color: var(--ion-color-medium);">{{ 'OR' | translate }}</span>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          fill="outline"
+          class="rounded-button"
+          (click)="registerWithGoogle()">
+          <ion-icon name="logo-google" slot="start"></ion-icon>
+          {{ 'SIGN_IN_WITH_GOOGLE' | translate }}
+        </ion-button>
+
+        <div style="margin-top: 24px; text-align: center;">
+          <p style="color: var(--ion-color-medium);">
+            {{ 'ALREADY_HAVE_ACCOUNT' | translate }}
+            <a (click)="goToLogin()" style="color: var(--ion-color-primary); cursor: pointer;">
+              {{ 'LOGIN' | translate }}
+            </a>
+          </p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

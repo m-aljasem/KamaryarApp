@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'RMDQ' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <p style="margin-bottom: 24px; color: var(--ion-color-medium);">
+          {{ 'RMDQ_DESCRIPTION' | translate }}
+        </p>
+
+        <div *ngFor="let question of questions" style="margin-bottom: 24px;">
+          <p style="font-weight: 600; margin-bottom: 12px; color: var(--ion-color-dark); font-size: 15px; line-height: 1.6;">
+            {{ question }}. {{ getQuestionText(question) }}
+          </p>
+          <ion-segment [(ngModel)]="answers[question]">
+            <ion-segment-button [value]="false">
+              <ion-label>{{ 'NO' | translate }}</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="true">
+              <ion-label>{{ 'YES' | translate }}</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          class="rounded-button rounded-button--primary"
+          (click)="submit()"
+          [disabled]="!allQuestionsAnswered">
+          {{ 'SUBMIT' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

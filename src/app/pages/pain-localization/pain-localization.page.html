@@ -1,0 +1,184 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'PAIN_LOCALIZATION' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gradient-bg-light">
+  <div class="ion-padding">
+    <ion-card class="modern-card">
+      <ion-card-content>
+        <p style="margin-bottom: 24px; color: var(--ion-color-medium); text-align: center;">
+          {{ 'PAIN_LOCALIZATION_DESCRIPTION' | translate }}
+        </p>
+
+        <ion-segment [(ngModel)]="view" (ionChange)="toggleView()">
+          <ion-segment-button value="anterior">
+            <ion-label>{{ 'ANTERIOR_VIEW' | translate }}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="posterior">
+            <ion-label>{{ 'POSTERIOR_VIEW' | translate }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <div style="margin: 24px 0; text-align: center; min-height: 400px; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: var(--ion-border-radius); padding: 16px;">
+          <svg width="200" height="400" viewBox="0 0 100 400" style="max-width: 100%;">
+            <!-- Anterior View Body Outline -->
+            <g *ngIf="view === 'anterior'">
+              <!-- Head -->
+              <ellipse cx="50" cy="30" rx="15" ry="20" 
+                       fill="none" stroke="#333" stroke-width="2"
+                       [attr.fill]="isRegionSelected(1) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                       (click)="toggleRegion(1)"
+                       style="cursor: pointer;" />
+              
+              <!-- Neck -->
+              <rect x="45" y="40" width="10" height="20" 
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="isRegionSelected(2) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    (click)="toggleRegion(2)"
+                    style="cursor: pointer;" />
+              
+              <!-- Torso -->
+              <path d="M 40 60 Q 40 60 35 100 Q 35 140 35 180 Q 35 220 40 260 L 60 260 Q 65 220 65 180 Q 65 140 65 100 Q 65 60 60 60 Z"
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="(isRegionSelected(5) || isRegionSelected(6) || isRegionSelected(7) || isRegionSelected(8)) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    style="cursor: pointer;" />
+              
+              <!-- Chest Upper (clickable area) -->
+              <rect x="40" y="60" width="20" height="30" 
+                    fill="rgba(0,0,0,0)" stroke="none"
+                    [attr.fill]="isRegionSelected(5) ? 'rgba(235, 68, 90, 0.5)' : 'rgba(0,0,0,0)'"
+                    (click)="toggleRegion(5)"
+                    style="cursor: pointer;" />
+              
+              <!-- Chest Lower -->
+              <rect x="40" y="90" width="20" height="30" 
+                    fill="rgba(0,0,0,0)" stroke="none"
+                    [attr.fill]="isRegionSelected(6) ? 'rgba(235, 68, 90, 0.5)' : 'rgba(0,0,0,0)'"
+                    (click)="toggleRegion(6)"
+                    style="cursor: pointer;" />
+              
+              <!-- Abdomen Upper -->
+              <rect x="40" y="120" width="20" height="30" 
+                    fill="rgba(0,0,0,0)" stroke="none"
+                    [attr.fill]="isRegionSelected(7) ? 'rgba(235, 68, 90, 0.5)' : 'rgba(0,0,0,0)'"
+                    (click)="toggleRegion(7)"
+                    style="cursor: pointer;" />
+              
+              <!-- Abdomen Lower -->
+              <rect x="40" y="150" width="20" height="30" 
+                    fill="rgba(0,0,0,0)" stroke="none"
+                    [attr.fill]="isRegionSelected(8) ? 'rgba(235, 68, 90, 0.5)' : 'rgba(0,0,0,0)'"
+                    (click)="toggleRegion(8)"
+                    style="cursor: pointer;" />
+              
+              <!-- Arms -->
+              <path d="M 40 70 L 25 70 L 25 140 L 30 150" fill="none" stroke="#333" stroke-width="2" />
+              <path d="M 60 70 L 75 70 L 75 140 L 70 150" fill="none" stroke="#333" stroke-width="2" />
+              
+              <!-- Hips -->
+              <ellipse cx="40" cy="190" rx="8" ry="12" fill="none" stroke="#333" stroke-width="2"
+                       [attr.fill]="isRegionSelected(11) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                       (click)="toggleRegion(11)"
+                       style="cursor: pointer;" />
+              <ellipse cx="60" cy="190" rx="8" ry="12" fill="none" stroke="#333" stroke-width="2"
+                       [attr.fill]="isRegionSelected(12) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                       (click)="toggleRegion(12)"
+                       style="cursor: pointer;" />
+              
+              <!-- Legs -->
+              <rect x="32" y="200" width="16" height="80" 
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="(isRegionSelected(13) || isRegionSelected(15) || isRegionSelected(17)) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    (click)="toggleRegion(13)"
+                    style="cursor: pointer;" />
+              <rect x="52" y="200" width="16" height="80" 
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="(isRegionSelected(14) || isRegionSelected(16) || isRegionSelected(18)) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    (click)="toggleRegion(14)"
+                    style="cursor: pointer;" />
+            </g>
+
+            <!-- Posterior View Body Outline -->
+            <g *ngIf="view === 'posterior'">
+              <!-- Head -->
+              <ellipse cx="50" cy="30" rx="15" ry="20" 
+                       fill="none" stroke="#333" stroke-width="2"
+                       [attr.fill]="isRegionSelected(1) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                       (click)="toggleRegion(1)"
+                       style="cursor: pointer;" />
+              
+              <!-- Neck -->
+              <rect x="45" y="40" width="10" height="20" 
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="isRegionSelected(2) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    (click)="toggleRegion(2)"
+                    style="cursor: pointer;" />
+              
+              <!-- Back Upper -->
+              <rect x="40" y="60" width="20" height="30" 
+                    fill="rgba(0,0,0,0)" stroke="none"
+                    [attr.fill]="isRegionSelected(9) ? 'rgba(235, 68, 90, 0.5)' : 'rgba(0,0,0,0)'"
+                    (click)="toggleRegion(9)"
+                    style="cursor: pointer;" />
+              
+              <!-- Back Lower -->
+              <rect x="40" y="90" width="20" height="30" 
+                    fill="rgba(0,0,0,0)" stroke="none"
+                    [attr.fill]="isRegionSelected(10) ? 'rgba(235, 68, 90, 0.5)' : 'rgba(0,0,0,0)'"
+                    (click)="toggleRegion(10)"
+                    style="cursor: pointer;" />
+              
+              <!-- Torso outline -->
+              <path d="M 40 60 Q 40 60 35 100 Q 35 140 35 180 Q 35 220 40 260 L 60 260 Q 65 220 65 180 Q 65 140 65 100 Q 65 60 60 60 Z"
+                    fill="none" stroke="#333" stroke-width="2" />
+              
+              <!-- Arms -->
+              <path d="M 40 70 L 25 70 L 25 140 L 30 150" fill="none" stroke="#333" stroke-width="2" />
+              <path d="M 60 70 L 75 70 L 75 140 L 70 150" fill="none" stroke="#333" stroke-width="2" />
+              
+              <!-- Hips -->
+              <ellipse cx="40" cy="190" rx="8" ry="12" fill="none" stroke="#333" stroke-width="2"
+                       [attr.fill]="isRegionSelected(11) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                       (click)="toggleRegion(11)"
+                       style="cursor: pointer;" />
+              <ellipse cx="60" cy="190" rx="8" ry="12" fill="none" stroke="#333" stroke-width="2"
+                       [attr.fill]="isRegionSelected(12) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                       (click)="toggleRegion(12)"
+                       style="cursor: pointer;" />
+              
+              <!-- Legs -->
+              <rect x="32" y="200" width="16" height="80" 
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="(isRegionSelected(13) || isRegionSelected(15) || isRegionSelected(17)) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    (click)="toggleRegion(13)"
+                    style="cursor: pointer;" />
+              <rect x="52" y="200" width="16" height="80" 
+                    fill="none" stroke="#333" stroke-width="2"
+                    [attr.fill]="(isRegionSelected(14) || isRegionSelected(16) || isRegionSelected(18)) ? 'rgba(235, 68, 90, 0.5)' : 'none'"
+                    (click)="toggleRegion(14)"
+                    style="cursor: pointer;" />
+            </g>
+          </svg>
+        </div>
+        
+        <div *ngIf="(selectedAreas.anterior.length > 0 || selectedAreas.posterior.length > 0)" style="margin-top: 16px; padding: 12px; background: rgba(235, 68, 90, 0.1); border-radius: var(--ion-border-radius);">
+          <p style="margin: 0; font-size: 14px; color: var(--ion-color-danger);">
+            {{ 'SELECTED_AREAS' | translate }}: 
+            {{ (view === 'anterior' ? selectedAreas.anterior.length : selectedAreas.posterior.length) }} 
+            {{ 'AREAS' | translate }}
+          </p>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          class="rounded-button rounded-button--primary"
+          (click)="continue()">
+          {{ 'CONTINUE' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
